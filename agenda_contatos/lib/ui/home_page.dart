@@ -84,24 +84,29 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(contacts[index].name ?? "",
-                        style: TextStyle(
-                            fontSize: 18.0, fontWeight: FontWeight.bold)),
-                    Text(
-                      contacts[index].email ?? "",
-                      style: TextStyle(fontSize: 13.0),
+              Flexible(
+                child: Padding(
+                    padding: EdgeInsets.only(left: 10.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                            contacts[index].name ?? "",
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)
+                        ),
+                        Text(
+                          contacts[index].email ?? "",
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontSize: 13.0),
+                        ),
+                        Text(
+                          contacts[index].phone ?? "",
+                          style: TextStyle(fontSize: 13.0),
+                        )
+                      ],
                     ),
-                    Text(
-                      contacts[index].phone ?? "",
-                      style: TextStyle(fontSize: 13.0),
-                    )
-                  ],
-                ),
+                  )
               )
             ],
           ),

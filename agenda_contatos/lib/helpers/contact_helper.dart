@@ -4,6 +4,7 @@ import 'package:sqflite/sqflite.dart';
 final String contactTable = "contactTable";
 final String idColumn = "idColumn";
 final String nameColumn = "nameColumn";
+final String companyNameColumn = "companyNameColumn";
 final String emailColumn = "emailColumn";
 final String phoneColumn = "phoneColumn";
 final String imgColumn = "imgColumn";
@@ -29,13 +30,14 @@ class ContactHelper {
 
   Future<Database> initDb() async {
     final databasesPath = await getDatabasesPath();
-    final path = join(databasesPath, "contactsNew.db");
+    final path = join(databasesPath, "contacts1.db");
 
     return await openDatabase(path, version: 1, onCreate: (Database db, int newerVersion) async {
       await db.execute(
         "CREATE TABLE $contactTable("
             "$idColumn INTEGER PRIMARY KEY, "
             "$nameColumn TEXT, "
+            "$companyNameColumn TEXT, "
             "$emailColumn TEXT, "
             "$phoneColumn TEXT, "
             "$imgColumn TEXT)"
@@ -54,7 +56,7 @@ class ContactHelper {
     Database dbContact = await db;
 
     List<Map> maps = await dbContact.query(contactTable,
-      columns: [idColumn, nameColumn, emailColumn, phoneColumn, imgColumn],
+      columns: [idColumn, nameColumn, companyNameColumn, emailColumn, phoneColumn, imgColumn],
       where: "$idColumn = ?",
       whereArgs: [id]
     );
@@ -111,6 +113,7 @@ class Contact {
 
   int id;
   String name;
+  String companyName;
   String email;
   String phone;
   String img;
@@ -120,6 +123,7 @@ class Contact {
   Contact.fromMap(Map map) {
     id = map[idColumn];
     name = map[nameColumn];
+    companyName = map[companyNameColumn];
     email = map[emailColumn];
     phone = map[phoneColumn];
     img = map[imgColumn];
@@ -128,6 +132,7 @@ class Contact {
   Map toMap() {
     Map<String, dynamic> map = {
       nameColumn: name,
+      companyNameColumn: companyName,
       emailColumn: email,
       phoneColumn: phone,
       imgColumn: img
@@ -142,7 +147,7 @@ class Contact {
 
   @override
   String toString() {
-    return "Contact(id: $id, name: $name, email: $email, phone: $phone, img: $img)";
+    return "Contact(id: $id, name: $name, companyName: $companyName, email: $email, phone: $phone, img: $img)";
   }
 
 
